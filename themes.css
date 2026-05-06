@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #111;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden; /* Hide horizontal scroll */
+    min-height: 100vh;
+}
+
+.gallery-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 120px 50px 50px 50px; /* added top padding so header doesn't overlap */
+    width: 100%;
+    height: 100vh;
+    position: fixed; /* Fixed to the viewport */
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Ensure navbar stays on top */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.gallery-column {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 25%;
+    will-change: transform; /* Hint for browser optimization */
+}
+
+.gallery-card {
+    background-color: #222;
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 15px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card:hover {
+    transform: scale(1.02);
+}
+
+.card-img {
+    width: 100%;
+    height: 350px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background-position: center;
+    background-size: cover;
+}
+
+.gallery-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #eee;
+}
+
+.gallery-card p {
+    font-size: 0.9rem;
+    color: #aaa;
+    line-height: 1.4;
+}
+
+/* Invisible spacer that makes the page scrollable */
+.scroll-spacer {
+    height: 300vh; /* Adjust this to determine total scroll length */
+}
