@@ -302,15 +302,15 @@
 
   if (themesSection && columns.length > 0) {
     const initialOffsets = Array.from(columns).map(column => {
-        const inlineStyle = column.getAttribute('style');
-        let initialY = 0;
-        if (inlineStyle && inlineStyle.includes('translateY')) {
-             const match = inlineStyle.match(/translateY\(([\d.]+)vh\)/);
-             if (match) {
-                 initialY = parseFloat(match[1]) * window.innerHeight / 100;
-             }
+      const inlineStyle = column.getAttribute('style');
+      let initialY = 0;
+      if (inlineStyle && inlineStyle.includes('translateY')) {
+        const match = inlineStyle.match(/translateY\(([\d.]+)vh\)/);
+        if (match) {
+          initialY = parseFloat(match[1]) * window.innerHeight / 100;
         }
-        return initialY;
+      }
+      return initialY;
     });
 
     window.addEventListener('scroll', () => {
@@ -324,15 +324,15 @@
         const scrollDistance = Math.abs(sectionTop);
         const maxScroll = sectionRect.height - windowHeight;
         const scrollProgress = scrollDistance / maxScroll;
-        
+
         columns.forEach((column, index) => {
-            const speed = parseFloat(column.getAttribute('data-speed'));
-            const initialY = initialOffsets[index];
-            
-            // Calculate the parallax movement (moving upwards)
-            const moveY = initialY - (scrollDistance * speed);
-            
-            column.style.transform = `translateY(${moveY}px)`;
+          const speed = parseFloat(column.getAttribute('data-speed'));
+          const initialY = initialOffsets[index];
+
+          // Calculate the parallax movement (moving upwards)
+          const moveY = initialY - (scrollDistance * speed);
+
+          column.style.transform = `translateY(${moveY}px)`;
         });
 
         // Fade in bottom button when almost scrolled
@@ -369,14 +369,14 @@
         modalTitle.textContent = folder.getAttribute('data-title');
         modalDesc.textContent = folder.getAttribute('data-desc');
         modalPhoto.style.backgroundColor = folder.getAttribute('data-color') || '#444';
-        
+
         projectModal.classList.add('active');
       });
     });
 
     const closeFn = () => projectModal.classList.remove('active');
-    if(closeModal) closeModal.addEventListener('click', closeFn);
-    if(modalBackdrop) modalBackdrop.addEventListener('click', closeFn);
+    if (closeModal) closeModal.addEventListener('click', closeFn);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeFn);
   }
 
   // ════════════════════════════════════════════════════
@@ -403,14 +403,50 @@
     setInterval(() => {
       const randomNotif = notifications[Math.floor(Math.random() * notifications.length)];
       notifText.innerHTML = `<strong>${randomNotif.name}</strong> ${randomNotif.text}`;
-      notifPhoto.style.backgroundColor = randomNotif.color; 
-      
+      notifPhoto.style.backgroundColor = randomNotif.color;
+
       popup.classList.add('show');
-      
+
       setTimeout(() => {
         popup.classList.remove('show');
-      }, 5000); 
+      }, 5000);
     }, 3000);
   }
 
 })();
+
+
+
+// ════════════════════════════════════════════════════
+// 8. COUNTDOWN TIMER LOGIC
+// ════════════════════════════════════════════════════
+const timers = document.querySelectorAll('.countdown-timer');
+
+if (timers.length > 0) {
+  // Set time in seconds (10 * 60 = 10 minutes). 
+  // If you literally want just 10 seconds, change this to: let timeRemaining = 10;
+  let timeRemaining = 10 * 60;
+
+  const timerInterval = setInterval(() => {
+    const minutes = Math.floor(timeRemaining / 60);
+    let seconds = timeRemaining % 60;
+
+    // Add a leading zero if seconds are less than 10 (e.g. 10:09)
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    // Update the text of both the Hero and Navbar timers simultaneously
+    timers.forEach(timer => {
+      timer.textContent = `OFFER ending in ${minutes}:${seconds}`;
+    });
+
+    // Stop the timer when it hits zero
+    if (timeRemaining <= 0) {
+      clearInterval(timerInterval);
+      timers.forEach(timer => {
+        timer.textContent = "0:00";
+      });
+    } else {
+      timeRemaining--;
+    }
+  }, 1000);
+};

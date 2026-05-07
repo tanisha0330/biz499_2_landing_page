@@ -146,7 +146,7 @@ a {
   padding: 1rem clamp(2rem, 5vw, 4rem);
   background: rgba(10, 10, 15, 0.85);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .navbar.scrolled .nav-links {
@@ -400,7 +400,6 @@ a {
   position: relative;
   z-index: 2;
   margin-top: 2rem;
-  margin-bottom: 6vh;
   opacity: 0;
   display: flex;
   align-items: center;
@@ -408,80 +407,26 @@ a {
   animation: fadeIn 0.8s ease 0.7s forwards;
 }
 
-.offer-wrapper {
-  position: absolute;
-  top: -85px;
-  /* Adjust to sit right above the button */
-  left: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-}
-
 .offer-text {
-  color: #ff3b3b;
-  font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
+      position: absolute;
+      top: -30px;
+      left: 15px;
+      color: #ff3b3b;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
 
-.price-drop {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-display);
-}
+    .blink-red {
+      animation: blinkText 1.2s ease-in-out infinite;
+    }
 
-.price-old {
-  color: var(--text-dim);
-  font-size: 1.2rem;
-  font-weight: 600;
-  text-decoration: line-through;
-  text-decoration-color: #ff3b3b;
-  text-decoration-thickness: 2px;
-}
-
-.price-new {
-  font-size: 2rem;
-  font-weight: 900;
-  background: var(--brand-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  opacity: 0;
-  transform: translateX(-20px);
-  animation: slidePrice 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  animation-delay: 1.2s;
-  /* Waits a moment after load before sliding in */
-}
-
-.blink-red {
-  animation: blinkText 1.2s ease-in-out infinite;
-}
-
-@keyframes blinkText {
-
-  0%,
-  100% {
-    opacity: 1;
-    text-shadow: 0 0 10px rgba(255, 59, 59, 0.4);
-  }
-
-  50% {
-    opacity: 0.3;
-    text-shadow: none;
-  }
-}
-
-@keyframes slidePrice {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
+    @keyframes blinkText {
+      0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(255, 59, 59, 0.4); }
+      50% { opacity: 0.3; text-shadow: none; }
+    }
 
 .cta-btn {
   display: inline-flex;
@@ -550,17 +495,9 @@ a {
 }
 
 @keyframes pulse-red {
-  0% {
-    box-shadow: 0 0 5px rgba(255, 59, 59, 0.1);
-  }
-
-  50% {
-    box-shadow: 0 0 18px rgba(255, 59, 59, 0.3);
-  }
-
-  100% {
-    box-shadow: 0 0 5px rgba(255, 59, 59, 0.1);
-  }
+  0% { box-shadow: 0 0 5px rgba(255, 59, 59, 0.1); }
+  50% { box-shadow: 0 0 18px rgba(255, 59, 59, 0.3); }
+  100% { box-shadow: 0 0 5px rgba(255, 59, 59, 0.1); }
 }
 
 .nav-action-wrapper .countdown-timer {
@@ -779,8 +716,8 @@ a {
 
 .h-scroll-wrapper {
   /* Height determines how long the user scrolls to move horizontally */
-  /* Adjusted for continuous spacing so you don't scroll too long on empty space */
-  height: 250vh;
+  /* For 4 panels (each 100vw), we need roughly 400vh to scroll them fully */
+  height: 400vh;
   position: relative;
   background: var(--bg);
 }
@@ -798,29 +735,24 @@ a {
 .h-scroll-container {
   display: flex;
   height: 100%;
-  width: max-content;
-  /* Allow container to shrink to fit the panels + gaps */
-  gap: 2rem;
-  /* The small separation gap between panels */
-  padding: 0 clamp(2rem, 5vw, 4rem);
-  /* Space at the beginning and end of the scroll */
+  width: 400vw;
+  /* 4 panels * 100vw */
   will-change: transform;
 }
 
 .h-panel {
-  width: clamp(320px, 75vw, 550px);
-  /* Gives panel a reasonable width instead of 100vw */
+  width: 100vw;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: clamp(2rem, 5vw, 4rem);
   padding-top: 32vh;
   /* Pushes the panels down so they don't overlap the text */
   flex-shrink: 0;
 }
 
 .h-panel-content {
-  width: 100%;
   max-width: 600px;
   background: var(--bg-surface);
   padding: 4rem;
@@ -1245,7 +1177,7 @@ a {
   position: relative;
   background: var(--bg);
   /* The height must be large enough to allow scrolling through all themes */
-  height: 250vh;
+  height: 250vh; 
   z-index: 2;
 }
 
@@ -1361,7 +1293,6 @@ a {
   .gallery-column {
     width: 33.333%;
   }
-
   .gallery-column:last-child {
     display: none;
   }
@@ -1371,21 +1302,17 @@ a {
   .gallery-column {
     width: 50%;
   }
-
   .gallery-column:nth-child(3) {
     display: none;
   }
-
   .card-img {
     height: 220px;
   }
 }
-
 @media (max-width: 480px) {
   .gallery-column {
     width: 100%;
   }
-
   .gallery-column:nth-child(2) {
     display: none;
   }
@@ -1404,22 +1331,19 @@ a {
   z-index: 3;
 }
 
-.split-left,
-.split-right {
+.split-left, .split-right {
   flex: 1 1 50%;
   max-width: 50%;
   padding: clamp(4rem, 8vw, 6rem) clamp(2rem, 5vw, 4rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  box-sizing: border-box;
-  /* ensure padding doesn't affect width */
+  box-sizing: border-box; /* ensure padding doesn't affect width */
 }
 
 .split-left {
   border-right: 1px solid rgba(255, 255, 255, 0.05);
-  overflow-y: auto;
-  /* allow inner scrolling if needed instead of stretching main screen */
+  overflow-y: auto; /* allow inner scrolling if needed instead of stretching main screen */
 }
 
 .split-header .section-title {
@@ -1434,8 +1358,7 @@ a {
 .folders-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  /* reduced gap to fit screens better */
+  gap: 1rem; /* reduced gap to fit screens better */
   margin-top: 2rem;
 }
 
@@ -1443,8 +1366,7 @@ a {
   background: var(--bg-surface);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  padding: 1.5rem 1rem;
-  /* reduced padding */
+  padding: 1.5rem 1rem; /* reduced padding */
   text-align: center;
   cursor: pointer;
   transition: transform 0.3s ease, border-color 0.3s ease;
@@ -1456,8 +1378,7 @@ a {
 }
 
 .folder-icon {
-  font-size: 2.5rem;
-  /* reduced icon size */
+  font-size: 2.5rem; /* reduced icon size */
   margin-bottom: 0.8rem;
 }
 
@@ -1478,8 +1399,7 @@ a {
   padding-bottom: 1rem;
   scrollbar-width: thin;
   scrollbar-color: var(--brand-pink) transparent;
-  width: 100%;
-  /* Ensure container is contained */
+  width: 100%; /* Ensure container is contained */
 }
 
 .feedback-slider::-webkit-scrollbar {
@@ -1493,27 +1413,22 @@ a {
 
 .feedback-card {
   flex: 0 0 100%;
-  max-width: 100%;
-  /* Ensure it does not overflow its parent */
+  max-width: 100%; /* Ensure it does not overflow its parent */
   scroll-snap-align: center;
   background: var(--bg-surface);
   border-radius: 16px;
-  padding: 2rem 1.5rem;
-  /* Reduced padding from 3rem -> 2rem */
+  padding: 2rem 1.5rem; /* Reduced padding from 3rem -> 2rem */
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
-  /* Crucial for preventing sideways stretch */
-  height: fit-content;
-  /* Ensure it only takes up as much sizing as needed instead of stretching */
+  box-sizing: border-box; /* Crucial for preventing sideways stretch */
+  height: fit-content; /* Ensure it only takes up as much sizing as needed instead of stretching */
 }
 
 .feedback-photo {
-  width: 80px;
-  /* Reduced from 100px */
+  width: 80px; /* Reduced from 100px */
   height: 80px;
   border-radius: 50%;
   background-size: cover;
@@ -1523,8 +1438,7 @@ a {
 }
 
 .feedback-text {
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  /* Reduced font size slightly */
+  font-size: clamp(0.9rem, 1.5vw, 1rem); /* Reduced font size slightly */
   font-style: italic;
   color: var(--text-dim);
   margin-bottom: 1.2rem;
@@ -1541,10 +1455,7 @@ a {
 /* Modal */
 .project-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0; width: 100%; height: 100%;
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -1561,10 +1472,7 @@ a {
 
 .modal-backdrop {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(5px);
 }
@@ -1588,10 +1496,8 @@ a {
 
 .close-modal {
   position: absolute;
-  top: 1rem;
-  right: 1.5rem;
-  background: none;
-  border: none;
+  top: 1rem; right: 1.5rem;
+  background: none; border: none;
   color: var(--text);
   font-size: 2rem;
   cursor: pointer;
@@ -1628,14 +1534,11 @@ a {
   .split-section {
     flex-direction: column;
   }
-
-  .split-left,
-  .split-right {
+  .split-left, .split-right {
     max-width: 100%;
     flex: 1 1 auto;
     padding: 3rem 1.5rem;
   }
-
   .split-left {
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -1675,8 +1578,7 @@ a {
   height: 100%;
 }
 
-.contact-left,
-.contact-right {
+.contact-left, .contact-right {
   flex: 1 1 50%;
   max-width: 50%;
   display: flex;
@@ -1770,7 +1672,7 @@ a {
   background-size: cover;
   background-position: center top;
   border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -1778,24 +1680,19 @@ a {
   .contact-split {
     flex-direction: column;
   }
-
-  .contact-left,
-  .contact-right {
+  .contact-left, .contact-right {
     flex: 1 1 auto;
     max-width: 100%;
     padding: 2rem;
   }
-
   .contact-left {
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
-
   .owner-photo {
     width: 250px;
     height: 300px;
   }
-
   .photo-headline {
     font-size: 2rem;
   }
