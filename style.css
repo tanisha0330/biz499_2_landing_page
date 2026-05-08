@@ -1755,4 +1755,16 @@ a {
     align-items: center;
     gap: 1.5rem;
   }
+
+  .navbar {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: none !important; /* Slightly darker for readability */
+  }
+  
+  .navbar.scrolled {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: none !important;
+  }
 }
