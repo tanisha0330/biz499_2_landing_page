@@ -420,33 +420,114 @@
 // ════════════════════════════════════════════════════
 // 8. COUNTDOWN TIMER LOGIC
 // ════════════════════════════════════════════════════
-const timers = document.querySelectorAll('.countdown-timer');
+document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
 
-if (timers.length > 0) {
-  // Set time in seconds (10 * 60 = 10 minutes). 
-  // If you literally want just 10 seconds, change this to: let timeRemaining = 10;
-  let timeRemaining = 10 * 60;
+  // 1. Mobile Menu Toggle
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    menuToggle.classList.toggle('active');
+  });
 
-  const timerInterval = setInterval(() => {
-    const minutes = Math.floor(timeRemaining / 60);
-    let seconds = timeRemaining % 60;
-
-    // Add a leading zero if seconds are less than 10 (e.g. 10:09)
-    seconds = seconds < 10 ? '0' + seconds : seconds;
-
-    // Update the text of both the Hero and Navbar timers simultaneously
-    timers.forEach(timer => {
-      timer.textContent = `OFFER ending in ${minutes}:${seconds}`;
+  // 2. Close Menu when clicking links
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      menuToggle.classList.remove('active');
     });
+  });
 
-    // Stop the timer when it hits zero
-    if (timeRemaining <= 0) {
-      clearInterval(timerInterval);
-      timers.forEach(timer => {
-        timer.textContent = "0:00";
+  // 3. Global Countdown Timer (Updates all instances)
+  let timeRemaining = 600; // 10 minutes in seconds
+  const timerDisplays = document.querySelectorAll('.countdown-timer');
+
+  const updateTimers = () => {
+    if (timeRemaining <= 0) return;
+    timeRemaining--;
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+    const timeStr = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    
+    timerDisplays.forEach(display => {
+      // Only prepend text for the desktop/hero versions
+      if (!display.classList.contains('m-timer-val')) {
+        display.textContent = `Offer ending in ${timeStr}`;
+      } else {
+        display.textContent = timeStr;
+      }
+    });
+  };
+
+  setInterval(updateTimers, 1000);
+});
+
+
+
+// ── READ MORE FUNCTIONALITY ──
+function initReadMore() {
+  console.log('🔍 Initializing Read More...');
+  
+  const descriptions = document.querySelectorAll('.h-panel-desc');
+  console.log(`Found ${descriptions.length} descriptions`);
+  
+  descriptions.forEach((desc, index) => {
+    console.log(`Processing description ${index + 1}`);
+    
+    // Remove existing button if any
+    const existingBtn = desc.querySelector('.read-more-toggle');
+    if (existingBtn) existingBtn.remove();
+    
+    // Only apply on mobile
+    if (window.innerWidth <= 900) {
+      // Create Read More button
+      const readMoreBtn = document.createElement('button');
+      readMoreBtn.className = 'read-more-toggle';
+      readMoreBtn.textContent = 'Read More';
+      readMoreBtn.setAttribute('data-index', index);
+      
+      // Add click event
+      readMoreBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log(`Button ${index} clicked`);
+        
+        if (desc.classList.contains('show-full')) {
+          // Collapse
+          desc.classList.remove('show-full');
+          readMoreBtn.textContent = 'Read More';
+          console.log('Collapsed');
+        } else {
+          // Expand
+          desc.classList.add('show-full');
+          readMoreBtn.textContent = 'Show Less';
+          console.log('Expanded');
+        }
       });
-    } else {
-      timeRemaining--;
+      
+      // Add button to description
+      desc.appendChild(readMoreBtn);
+      console.log(`Button added to description ${index + 1}`);
     }
-  }, 1000);
-};
+  });
+  
+  console.log('✅ Read More initialization complete');
+}
+
+// Run when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('📄 DOM Loaded');
+  setTimeout(initReadMore, 500); // Small delay to ensure content is loaded
+});
+
+// Re-initialize on window resize
+let resizeTimer;
+window.addEventListener('resize', function() {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    console.log(' Window resized, re-initializing...');
+    initReadMore();
+  }, 250);
+});
+
+
+

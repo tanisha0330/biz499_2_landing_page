@@ -80,12 +80,18 @@ a {
   justify-content: space-between;
   padding: 1.6rem clamp(2rem, 5vw, 4rem);
   pointer-events: none;
+  background: rgba(18, 18, 18, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  
   transition: background 0.4s ease, backdrop-filter 0.4s ease, padding 0.4s ease;
 }
 
 .navbar>* {
   pointer-events: auto;
 }
+
 
 /* ── Logo ── */
 .logo {
@@ -142,28 +148,39 @@ a {
 }
 
 /* ── Scrolled State ── */
-.navbar.scrolled {
-  padding: 1rem clamp(2rem, 5vw, 4rem);
-  background: rgba(10, 10, 15, 0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
+/* ── Scrolled State — Desktop Only ── */
+@media (min-width: 900px) {
+  .navbar.scrolled {
+    padding: 1rem clamp(2rem, 5vw, 4rem);
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
 
-.navbar.scrolled .nav-links {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(1rem, 2vw, 2.5rem);
-}
+  .navbar.scrolled .nav-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1rem, 2vw, 2.5rem);
+  }
 
-.navbar.scrolled .nav-action-wrapper {
-  position: relative;
-  right: auto;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateX(0);
+  .navbar.scrolled .nav-action-wrapper {
+    position: relative;
+    right: auto;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .h-panel-desc {
+    max-height: none !important;
+  }
+  
+  .read-more-btn {
+    display: none !important;
+  }
 }
 
 .nav-link {
@@ -692,6 +709,28 @@ a {
     height: clamp(320px, 80vw, 550px);
   }
 
+  .read-more-toggle {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 100 !important;
+    margin-top: 10px !important;
+    padding: 8px 16px !important;
+    background: linear-gradient(135deg, #F59AC4, #FBBC74) !important;
+    color: #121212 !important;
+    border: none !important;
+    border-radius: 20px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(245, 154, 196, 0.3) !important;
+  }
+
+
+
+  
+
   .hero-headline .line-1,
   .hero-headline .line-2 {
     font-size: clamp(2.2rem, 10vw, 4.5rem);
@@ -707,6 +746,8 @@ a {
     max-width: 100%;
   }
 }
+
+
 
 @media (max-width: 640px) {
   .menu-toggle {
@@ -871,20 +912,76 @@ a {
 }
 
 .h-panel-desc {
-  font-size: 1.1rem;
-  color: var(--text-dim);
-  line-height: 1.6;
+   position: relative;
+    overflow: hidden;
+    max-height: 4.8em; /* Shows ~3 lines (1.6em line-height × 3) */
+    transition: max-height 0.3s ease;
 }
+
+.h-panel-desc.expanded {
+    max-height: none;
+  }
+  
+  .read-more-btn {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: var(--brand-gradient);
+    color: #121212;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: transform 0.2s ease;
+  }
+
+  .read-more-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  .read-more-btn::after {
+    content: ' ▼';
+    font-size: 0.6rem;
+  }
+  
+  .read-more-btn.expanded::after {
+    content: ' ▲';
+  }
 
 /* ═══════════════════════════════════════════════════
    OUTRO
    ═══════════════════════════════════════════════════ */
+
+
+
 .outro {
   min-height: 50vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg);
+}
+
+@media (max-width: 900px) {
+  .contact-left,
+  .contact-right {
+    padding-left: 0.75rem !important; /* 12px - very small */
+    padding-right: 0.75rem !important;
+  }
+  
+  .contact-form-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .contact-form input,
+  .contact-form textarea {
+    padding-left: 0.875rem !important;
+    padding-right: 0.875rem !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1629,6 +1726,8 @@ a {
     flex-direction: column;
   }
 
+
+
   .split-left,
   .split-right {
     max-width: 100%;
@@ -1932,4 +2031,158 @@ a {
     left: 20px;
     padding: 8px 15px 8px 8px;
   }
+  @media (max-width: 640px) {
+  /* ... existing mobile styles ... */
+
+  .nav-links.open {
+    transform: translateX(0);
+    /* ✅ Force vertical alignment always */
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* ✅ Prevent scrolled state from affecting mobile menu */
+  .navbar.scrolled .nav-links {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1.5rem !important;
+  }
 }
+
+
+}
+
+
+
+
+
+
+
+
+/* ════════════════════════════════════════════════════════════════════════════════════
+   MASTER MOBILE OVERRIDES (Optimized for 360x700px)
+   ════════════════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 991px) {
+  
+  /* 1. Eliminate Rocket Image */
+  .sphere-wrapper { display: none !important; }
+
+
+
+  /* 2. Headline Optimization for 360px Width */
+  .hero { 
+    padding-top: 6rem; 
+    justify-content: center; 
+    min-height: 80vh; 
+    text-align: center;
+  }
+  .hero-headline h1 { 
+    font-size: 2.8rem !important; 
+    line-height: 1.05; 
+  }
+
+  .hero-cta {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+
+  .cta-elements-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem; /* Space between elements */
+    width: 100%;
+  }
+
+
+  /* Ensure elements stack in the specific order requested */
+  .countdown-timer.hero-timer {
+    order: 1;
+    margin-bottom: 0.5rem;
+  }
+
+
+
+
+  .price-new { font-size: 1.6rem !important; }
+
+
+  .price-drop {
+    order: 2;
+    margin-bottom: 0.5rem;
+  }
+
+
+  .cta-btn {
+    order: 3;
+    width: 100%; /* Makes button full width on small screens if desired */
+    max-width: 320px;
+    justify-content: center;
+  }
+
+  /* Hide the old offer-wrapper if it's still there */
+  .offer-wrapper {
+    display: none;
+  }
+  
+
+
+
+  /* 3. Mobile Navigation Side Menu */
+  .menu-toggle { display: flex !important; }
+  .nav-links {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+    background: rgba(18, 18, 18, 0.98); backdrop-filter: blur(15px);
+    flex-direction: column; align-items: center; justify-content: center;
+    transform: translateX(100%); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 99;
+  }
+  .nav-links.active { transform: translateX(0); }
+  .nav-link { font-size: 1.4rem !important; font-weight: 800; margin: 12px 0; }
+  .nav-action-wrapper { display: none !important; }
+
+  /* 4. Single Vertical Scroll Logic */
+  section { padding: 3rem 6% !important; }
+  
+  .h-scroll-wrapper { height: auto !important; padding: 2rem 5% !important; }
+  .h-scroll-sticky { position: relative !important; height: auto !important; overflow: visible !important; }
+  .h-scroll-container { flex-direction: column !important; gap: 1.2rem !important; width: 100% !important; padding: 0 !important; }
+  .h-panel { width: 100% !important; padding-top: 0 !important; height: auto !important; }
+  .h-panel-content { padding: 2rem 1.5rem !important; }
+  .h-bg-text { font-size: 1.4rem !important; white-space: normal !important; text-align: center; width: 100% !important; border: none !important; margin-bottom: 20px !important; }
+
+  .stack-area { height: auto !important; flex-direction: column !important; padding: 0 !important; }
+  .left-section, .right-section { position: relative !important; height: auto !important; width: 100% !important; top: 0 !important; padding: 2rem 6% !important; }
+  .card { position: relative !important; top: auto !important; left: auto !important; transform: none !important; width: 100% !important; margin-bottom: 1rem !important; min-height: auto !important; }
+
+  /* 5. Persistent Mobile Sticky Footer */
+  body { padding-bottom: 85px !important; }
+  .mobile-footer {
+    display: flex !important; position: fixed; bottom: 0; left: 0; width: 100%;
+    background: rgba(26, 26, 26, 0.96); backdrop-filter: blur(12px);
+    padding: 12px 5%; justify-content: space-between; align-items: center;
+    z-index: 2000; border-top: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.4);
+  }
+}
+
+/* Hidden by default on desktop */
+.mobile-footer { display: none; }
+.m-timer-box { display: flex; flex-direction: column; }
+.m-timer-label { font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase; }
+.m-timer-val { font-size: 1.1rem; color: #ff3b3b; font-weight: 800; line-height: 1; }
+.cta-btn-mobile { 
+  padding: 10px 18px; border-radius: 50px; background: var(--brand-gradient); 
+  color: #000; font-weight: 800; font-size: 0.75rem; text-transform: uppercase;
+}
+ 
+
+
+
+
+
