@@ -574,6 +574,27 @@ a {
   .sphere-wrapper { top: 30%; right: -25%; width: 90vw; height: 90vw; }
   .tagline { font-size: 0.72rem; }
   .scroll-hint { display: none; }
+
+    .notification-popup {
+    /* 1. Positioning: Top Center */
+    top: 75px !important; /* Below mobile navbar */
+    bottom: auto !important;
+    left: 50% !important;
+    
+    /* 2. Width: Small and centered */
+    width: 85% !important;
+    max-width: 320px !important; /* Cap the width */
+    transform: translate(-50%, 150%) scale(0.9); /* Start position for animation */
+    
+    /* 3. Visuals */
+    padding: 12px 15px !important;
+    border-radius: 12px !important;
+    z-index: 2001 !important; /* Ensure it's above everything */
+  }
+
+  .notification-popup.show {
+    transform: translate(-50%, 0) scale(1) !important; /* Move to visible center */
+  }
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1531,10 +1552,23 @@ a {
 /* ═══════════════════════════════════════════════════
    NOTIFICATION POPUP
    ═══════════════════════════════════════════════════ */
+
+
+
+
+
+/* ── Notification Popup - Top Center ── */
 .notification-popup {
   position: fixed;
-  bottom: 30px;
-  left: 30px;
+  top: clamp(5rem, 10vh, 7rem); /* Safely below navbar on all screens */
+  left: 50%;
+  transform: translate(-50%, 150%) scale(0.9); /* Hidden: centered but shifted down */
+  
+  /* Match navbar's inner width exactly */
+  width: calc(100% - clamp(4rem, 10vw, 8rem));
+  max-width: 550px;
+  min-width: 280px;
+  
   background: var(--bg-surface);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50px;
@@ -1544,16 +1578,18 @@ a {
   gap: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   z-index: 1000;
-  transform: translateY(150%) scale(0.9);
   opacity: 0;
   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
   pointer-events: none;
 }
 
 .notification-popup.show {
-  transform: translateY(0) scale(1);
+  transform: translate(-50%, 0) scale(1); /* Visible: slides up to center */
   opacity: 1;
 }
+
+/* Mobile fine-tuning */
+
 
 .notif-photo {
   width: 40px;
@@ -1759,7 +1795,7 @@ a {
   .navbar {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background: none !important; /* Slightly darker for readability */
+    background: none!important; /* Slightly darker for readability */
   }
   
   .navbar.scrolled {
